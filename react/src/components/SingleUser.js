@@ -8,6 +8,7 @@ const SingleUser = () => {
     const [user, setUser] = useState(null);
     const [allPosts, setAllPosts] = useState([]);
     const [message, setMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
     const tokenData = getTokenData();
 
     useEffect(() => {
@@ -56,8 +57,12 @@ const SingleUser = () => {
             }, { headers: getAuthHeader() });
 
             if (response.success) {
-                alert("Message sent!");
                 setMessage("");
+                setSuccessMessage("Message sent successfully!");
+                
+                setTimeout(() => {
+                    setSuccessMessage("");
+                }, 5000);
             } else {
                 alert(response.message || "Failed to send message");
             }
@@ -101,7 +106,10 @@ const SingleUser = () => {
 
 
                         </div>
-
+                        
+                        {successMessage && (
+                            <div className="mt-2" style={{color: 'blue'}}>{successMessage}</div>
+                        )}
                     </div>
                 </div>
             </div>
